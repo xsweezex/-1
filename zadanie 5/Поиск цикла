@@ -1,0 +1,47 @@
+import sys
+sys.setrecursionlimit(10**7)
+
+n = int(input())
+graph = [list(map(int, input().split())) for _ in range(n)]
+
+color = [0] * n  # 0 = unvisited, 1 = visiting, 2 = visited
+parent = [-1] * n
+cycle = []
+
+def dfs(u):
+    color[u] = 1
+    for v in range(n):
+        if graph[u][v] == 0:
+            continue
+        if color[v] == 0:
+            parent[v] = u
+            if dfs(v):
+                return True
+        elif color[v] == 1 and v != parent[u]:
+            # found cycle
+            cycle_path = []
+            cur = u
+            cycle_path.append(v)
+            while cur != v:
+                cycle_path.append(cur)
+                cur = parent[cur]
+            cycle_path.reverse()
+            global cycle
+            cycle = cycle_path
+            return True
+    color[u] = 2
+    return False
+
+found_cycle = False
+for i in range(n):
+    if color[i] == 0:
+        if dfs(i):
+            found_cycle = True
+            break
+
+if not found_cycle:
+    print("NO")
+else:
+    print("YES")
+    print(len(cycle))
+    print(*[x+1 for x in cycle])
