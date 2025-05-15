@@ -1,0 +1,33 @@
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+def insert_into_bst(root, value):
+    if root is None:
+        return TreeNode(value)
+    if value < root.value:
+        root.left = insert_into_bst(root.left, value)
+    elif value > root.value:
+        root.right = insert_into_bst(root.right, value)
+    return root
+
+def tree_height(root):
+    if root is None:
+        return 0
+    left_height = tree_height(root.left)
+    right_height = tree_height(root.right)
+    return max(left_height, right_height) + 1
+
+def main():
+    root = None
+    while True:
+        value = int(input())
+        if value == 0:
+            break
+        root = insert_into_bst(root, value)
+    print(tree_height(root))
+
+if __name__ == "__main__":
+    main()
