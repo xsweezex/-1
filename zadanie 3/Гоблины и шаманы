@@ -1,0 +1,22 @@
+from collections import deque
+import sys
+
+input = sys.stdin.read
+data = input().splitlines()
+n = int(data[0])
+
+left = deque()
+right = deque()
+
+for line in data[1:]:
+    if line[0] == '+':
+        _, i = line.split()
+        right.append(i)
+    elif line[0] == '*':
+        _, i = line.split()
+        right.appendleft(i)
+    else:  
+        print(left.popleft())
+
+    if len(left) < len(right):
+        left.append(right.popleft())
