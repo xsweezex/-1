@@ -1,0 +1,14 @@
+n = int(input())
+durability = list(map(int, input().split()))
+k = int(input())
+presses = list(map(int, input().split()))
+
+count = [0] * n
+for p in presses:
+    count[p - 1] += 1
+
+for i in range(n):
+    if count[i] > durability[i]:
+        print("YES")
+    else:
+        print("NO")
