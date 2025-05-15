@@ -1,0 +1,41 @@
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+def insert_into_bst(root, value):
+    depth = 1
+    current = root
+    while current:
+        if value < current.value:
+            if current.left is None:
+                current.left = TreeNode(value)
+                return depth + 1
+            current = current.left
+        elif value > current.value:
+            if current.right is None:
+                current.right = TreeNode(value)
+                return depth + 1
+            current = current.right
+        else:
+            return 0
+        depth += 1
+    return depth
+
+def main():
+    root = None
+    while True:
+        value = int(input())
+        if value == 0:
+            break
+        if root is None:
+            root = TreeNode(value)
+            print(1)
+        else:
+            depth = insert_into_bst(root, value)
+            if depth != 0:
+                print(depth)
+
+if __name__ == "__main__":
+    main()
