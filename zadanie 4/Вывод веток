@@ -1,0 +1,41 @@
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+def insert_into_bst(root, value):
+    if root is None:
+        return TreeNode(value)
+    if value < root.value:
+        root.left = insert_into_bst(root.left, value)
+    else:
+        root.right = insert_into_bst(root.right, value)
+    return root
+
+def find_single_child_nodes(root):
+    single_child_nodes = []
+    if root:
+        if (root.left and not root.right) or (root.right and not root.left):
+            single_child_nodes.append(root.value)
+        single_child_nodes.extend(find_single_child_nodes(root.left))
+        single_child_nodes.extend(find_single_child_nodes(root.right))
+    return single_child_nodes
+
+def main():
+    root = None
+    values = list(map(int, input().split()))
+    
+    for value in values:
+        if value == 0:
+            break
+        root = insert_into_bst(root, value)
+    
+    single_child_nodes = find_single_child_nodes(root)
+    single_child_nodes.sort()
+    
+    for node in single_child_nodes:
+        print(node)
+
+if __name__ == "__main__":
+    main()
