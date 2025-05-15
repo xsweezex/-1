@@ -1,0 +1,13 @@
+def is_correct_bracket_sequence(s):
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append(char)
+        elif char == ')':
+            if not stack:
+                return False
+            stack.pop()
+    return not stack
+
+sequence = input().strip()
+print("YES" if is_correct_bracket_sequence(sequence) else "NO")
