@@ -1,0 +1,40 @@
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+def insert_into_bst(root, value):
+    if root is None:
+        return TreeNode(value)
+    if value < root.value:
+        root.left = insert_into_bst(root.left, value)
+    else:
+        root.right = insert_into_bst(root.right, value)
+    return root
+
+def height(root):
+    if root is None:
+        return 0
+    left_height = height(root.left)
+    right_height = height(root.right)
+    if left_height == -1 or right_height == -1 or abs(left_height - right_height) > 1:
+        return -1
+    return max(left_height, right_height) + 1
+
+def main():
+    root = None
+    values = list(map(int, input().split()))
+    
+    for value in values:
+        if value == 0:
+            break
+        root = insert_into_bst(root, value)
+    
+    if height(root) != -1:
+        print("YES")
+    else:
+        print("NO")
+
+if __name__ == "__main__":
+    main()
